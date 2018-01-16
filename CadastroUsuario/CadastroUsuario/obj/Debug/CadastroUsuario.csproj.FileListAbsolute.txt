@@ -1,0 +1,6 @@
+C:\Users\ealbuquerque\Documents\learning\cSharp\CadastroUsuario\CadastroUsuario\bin\Debug\CadastroUsuario.exe.config
+C:\Users\ealbuquerque\Documents\learning\cSharp\CadastroUsuario\CadastroUsuario\bin\Debug\CadastroUsuario.exe
+C:\Users\ealbuquerque\Documents\learning\cSharp\CadastroUsuario\CadastroUsuario\bin\Debug\CadastroUsuario.pdb
+C:\Users\ealbuquerque\Documents\learning\cSharp\CadastroUsuario\CadastroUsuario\obj\Debug\CadastroUsuario.csprojResolveAssemblyReference.cache
+C:\Users\ealbuquerque\Documents\learning\cSharp\CadastroUsuario\CadastroUsuario\obj\Debug\CadastroUsuario.exe
+C:\Users\ealbuquerque\Documents\learning\cSharp\CadastroUsuario\CadastroUsuario\obj\Debug\CadastroUsuario.pdb
