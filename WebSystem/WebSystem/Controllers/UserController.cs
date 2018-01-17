@@ -20,9 +20,21 @@ namespace WebSystem.Controllers
             return View(ListadeUsuarios);
         }
 
-        //Add User
-        public ActionResult Add()
+        //Create User
+        public ActionResult Create()
         {
+            return View();
+        }
+
+        //POST: Create User
+        [HttpPost]
+        public ActionResult Create(User userNew)
+        {
+            if (ModelState.IsValid)
+            {
+                dbc.Insert(userNew);
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -46,6 +58,28 @@ namespace WebSystem.Controllers
 
 
         }
+        //Delete User
+        public ActionResult Delete(int id)
+        {
+            usuario = dbc.Search(id);
+            //dbc.Delete(usuario);
+            return View(usuario);
+        }
+
+        //POST: Delete User
+        [HttpPost]
+        public ActionResult Delete(User userDel)
+        {
+            if (ModelState.IsValid)
+            {
+                dbc.Delete(userDel);
+                return RedirectToAction("Index");
+            }
+            return View(userDel);
+
+
+        }
+
 
 
     }
