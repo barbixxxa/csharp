@@ -118,9 +118,9 @@ namespace WebSystem.Models
         }
 
         //Delete statement
-        public void Delete(User usuario)
+        public void Delete(int id)
         {
-            string query = "DELETE FROM user WHERE id=" + usuario.UserId;
+            string query = "DELETE FROM user WHERE id=" + id;
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);

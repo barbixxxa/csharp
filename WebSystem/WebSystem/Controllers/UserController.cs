@@ -62,7 +62,6 @@ namespace WebSystem.Controllers
         public ActionResult Delete(int id)
         {
             usuario = dbc.Search(id);
-            //dbc.Delete(usuario);
             return View(usuario);
         }
 
@@ -70,14 +69,8 @@ namespace WebSystem.Controllers
         [HttpPost]
         public ActionResult Delete(User userDel)
         {
-            if (ModelState.IsValid)
-            {
-                dbc.Delete(userDel);
-                return RedirectToAction("Index");
-            }
-            return View(userDel);
-
-
+            dbc.Delete(userDel.UserId);
+            return RedirectToAction("Index");
         }
 
 
