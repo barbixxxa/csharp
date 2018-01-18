@@ -14,9 +14,17 @@ namespace WebSystem.Controllers
 
 
         // GET: User
+        [HttpGet]
         public ActionResult Index()
         {
             ListadeUsuarios = dbc.Select();
+            return View(ListadeUsuarios);
+        }
+        //POST
+        [HttpPost]
+        public ActionResult Index(string searchUser)
+        {
+            ListadeUsuarios = dbc.Search(searchUser);
             return View(ListadeUsuarios);
         }
 
@@ -41,7 +49,7 @@ namespace WebSystem.Controllers
         //Edit User
         public ActionResult Edit(int id)
         {
-            usuario = dbc.Search(id);
+            usuario = dbc.SearchById(id);
             return View(usuario);
         }
 
@@ -61,7 +69,7 @@ namespace WebSystem.Controllers
         //Delete User
         public ActionResult Delete(int id)
         {
-            usuario = dbc.Search(id);
+            usuario = dbc.SearchById(id);
             return View(usuario);
         }
 

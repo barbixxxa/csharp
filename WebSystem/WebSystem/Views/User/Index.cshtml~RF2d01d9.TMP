@@ -9,10 +9,12 @@
 
 <div align="right">
     <form method="post">
-        <input type="search" id="searchUser" name="searchUser" placeholder="Search..." class="form-control" />
+        <input id="searchUser" type="search" placeholder="Search" name="searchUser" class="form-control" />
     </form>
+
+
 </div>
-@Html.ActionLink("Create New", "Create")
+<div align="left">@Html.ActionLink("Create New", "Create")</div>
 
 
 <table class="table">
@@ -28,12 +30,12 @@
             @Html.DisplayNameFor(model => model.UserEmail)
         </th>
         <th>
-            <input type="button" id="orderList" name="orderList" value="Order" class="btn btn-default" />
+            <input id="buttonOrder" type="button" value="Order" class="btn btn-default" />
         </th>
     </tr>
 
     @foreach (var item in Model)
-    {
+            {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.UserLogin)
@@ -53,3 +55,4 @@
     }
 
 </table>
+
