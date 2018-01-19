@@ -16,13 +16,21 @@ namespace WebSystem.Controllers
 
         // GET: User
         [HttpGet]
-        public ActionResult Index(string sortOrder)
+        public ViewResult Index(string sortOrder, string searchUser)
         {
             ViewBag.LoginSortParm = string.IsNullOrEmpty(sortOrder) ? "login_asc" : "";
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
             ViewBag.MailSortParm = string.IsNullOrEmpty(sortOrder) ? "mail_asc" : "";
             ListadeUsuarios = dbc.Select();
             var users = from u in ListadeUsuarios select u;
+
+            if (!string.IsNullOrEmpty(searchUser))
+            {
+                users = users.Where(u => u.UserName.ToLowerInvariant().Contains(searchUser.ToLowerInvariant())
+                || u.UserLogin.ToLowerInvariant().Contains(searchUser.ToLowerInvariant())
+                || u.UserEmail.ToLowerInvariant().Contains(searchUser.ToLowerInvariant()));
+            }
+
             switch (sortOrder)
             {
                 case "login_asc":
@@ -41,18 +49,6 @@ namespace WebSystem.Controllers
 
             return View(users.ToList());
         }
-
-        //POST: Search User
-        /* [HttpPost]
-         public ActionResult Index(string searchUser)
-         {
-             ListadeUsuarios = dbc.Search(searchUser);
-             return View(ListadeUsuarios);
-         }*/
-
-
-
-
 
         //Create User
         public ActionResult Create()
