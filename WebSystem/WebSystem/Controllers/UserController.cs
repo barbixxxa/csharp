@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using WebSystem.Models;
 
@@ -15,26 +16,41 @@ namespace WebSystem.Controllers
 
         // GET: User
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.LoginSortParm = string.IsNullOrEmpty(sortOrder) ? "login_asc" : "";
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+            ViewBag.MailSortParm = string.IsNullOrEmpty(sortOrder) ? "mail_asc" : "";
             ListadeUsuarios = dbc.Select();
-            return View(ListadeUsuarios);
+            var users = from u in ListadeUsuarios select u;
+            switch (sortOrder)
+            {
+                case "login_asc":
+                    users = users.OrderBy(u => u.UserLogin);
+                    break;
+                case "name_asc":
+                    users = users.OrderBy(u => u.UserName);
+                    break;
+                case "mail_asc":
+                    users = users.OrderBy(u => u.UserEmail);
+                    break;
+                default:
+                    users = users.OrderBy(u => u.UserId);
+                    break;
+            }
+
+            return View(users.ToList());
         }
 
         //POST: Search User
-        [HttpPost]
-        public ActionResult Index(string searchUser)
-        {
-            ListadeUsuarios = dbc.Search(searchUser);
-            return View(ListadeUsuarios);
-        }
+        /* [HttpPost]
+         public ActionResult Index(string searchUser)
+         {
+             ListadeUsuarios = dbc.Search(searchUser);
+             return View(ListadeUsuarios);
+         }*/
 
-        [HttpPost]
-        public ActionResult Order()
-        {
-            ListadeUsuarios = dbc.Order();
-            return RedirectToAction("Index", ListadeUsuarios);
-        }
+
 
 
 

@@ -19,19 +19,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserLogin)
+                @Html.ActionLink("Login", "Index", new { sortOrder = ViewBag.LoginSortParm })
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserEmail)
+                @Html.ActionLink("E-mail", "Index", new { sortOrder = ViewBag.MailSortParm })
             </th>
             <th>
-                 @Html.ActionLink("Index", "Index", routeValues: true, htmlAttributes: new { @class = "btn btn-info" })
-                <!--<input type="submit" id="orderList" name="orderList" value="Order" class="btn btn-info" formaction="Url.Action("Order")" formmethod="post" />-->
-
             </th>
         </tr>
     </thead>
