@@ -20,13 +20,23 @@ namespace WebSystem.Controllers
             ListadeUsuarios = dbc.Select();
             return View(ListadeUsuarios);
         }
-        //POST
+
+        //POST: Search User
         [HttpPost]
         public ActionResult Index(string searchUser)
         {
             ListadeUsuarios = dbc.Search(searchUser);
             return View(ListadeUsuarios);
         }
+
+        [HttpPost]
+        public ActionResult Order()
+        {
+            ListadeUsuarios = dbc.Order();
+            return RedirectToAction("Index", ListadeUsuarios);
+        }
+
+
 
         //Create User
         public ActionResult Create()

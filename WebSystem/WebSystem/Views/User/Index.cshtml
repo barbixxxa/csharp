@@ -12,25 +12,29 @@
         <input type="search" id="searchUser" name="searchUser" placeholder="Search..." class="form-control" />
     </form>
 </div>
-@Html.ActionLink("Create New", "Create")
+@Html.ActionLink("Create New", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserLogin)
-        </th>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserLogin)
+            </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserEmail)
-        </th>
-        <th>
-            <input type="button" id="orderList" name="orderList" value="Order" class="btn btn-default" />
-        </th>
-    </tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>
+                 @Html.ActionLink("Index", "Index", routeValues: true, htmlAttributes: new { @class = "btn btn-info" })
+                <!--<input type="submit" id="orderList" name="orderList" value="Order" class="btn btn-info" formaction="Url.Action("Order")" formmethod="post" />-->
+
+            </th>
+        </tr>
+    </thead>
 
     @foreach (var item in Model)
     {
@@ -46,8 +50,8 @@
                 @Html.DisplayFor(modelItem => item.UserEmail)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
+                @Html.ActionLink("Edit", "Edit", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Delete", "Delete", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-danger" })
             </td>
         </tr>
     }

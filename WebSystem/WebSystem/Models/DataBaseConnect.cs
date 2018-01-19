@@ -215,6 +215,51 @@ namespace WebSystem.Models
 
         }
 
+        public List<User> Order()
+        {
+            List<User> UsersList = new List<User>();
+            User usuario;
+
+            string query = "SELECT * FROM user ORDER BY name";
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //create a data reader and execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    usuario = new User();
+                    usuario.UserId = int.Parse(dataReader["id"].ToString());
+                    usuario.UserLogin = dataReader["username"].ToString();
+                    usuario.UserPassword = dataReader["password"].ToString();
+                    usuario.UserName = dataReader["name"].ToString();
+                    usuario.UserEmail = dataReader["email"].ToString();
+
+                    UsersList.Add(usuario);
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close connection
+                this.CloseConnection();
+
+                return UsersList;
+            }
+            else
+            {
+                return UsersList;
+            }
+
+
+
+        }
+
         public List<User> Search(string s)
         {
             List<User> UsersList = new List<User>();
