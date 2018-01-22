@@ -1,53 +1,92 @@
-﻿@model IEnumerable<WebSystem.Models.User>
+﻿
+@model PagedList.IPagedList<WebSystem.Models.User>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Users</h2>
 
-@Html.ActionLink("Create New", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+<form method="get" id="form_searchUser"></form>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.ActionLink("Login", "Index", new { sortOrder = ViewBag.LoginSortParm })
-            </th>
+@using (Html.BeginForm("DeleteSelected", "User", FormMethod.Post))
+{
+    @Html.ActionLink("Create New", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+    <input type="submit" value="Delete Selected" class="btn btn-danger" onclick="return confirm('Are you sure you wish to delete selected Users?');" />
 
-            <th>
-                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
-            </th>
-            <th>
-                @Html.ActionLink("E-mail", "Index", new { sortOrder = ViewBag.MailSortParm })
-            </th>
-            <th>
-                <form method="get">
-                    <input type="search" id="searchUser" name="searchUser" placeholder="Search..." class="form-control" />
-                </form>
-            </th>
-        </tr>
-    </thead>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/")jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked"))
+                    $('.chkCheckBoxId').prop('checked', true);
+                else
+                    $('.chkCheckBoxId').prop('checked', false);
+            });
+        });
+    </script>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserLogin)
-            </td>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="checkBoxAll" />
+                </th>
+                <th>
+                    @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.IdSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("Login", "Index", new { sortOrder = ViewBag.LoginSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserEmail)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Delete", "Delete", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-danger" })
-            </td>
-        </tr>
-    }
+                <th>
+                    @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    @Html.ActionLink("E-mail", "Index", new { sortOrder = ViewBag.MailSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>
+                <th>
+                    <input type="search" id="searchUser" name="searchUser" placeholder="Search..." class="form-control" form="form_searchUser" />
+                </th>
+            </tr>
+        </thead>
 
-</table>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    <input type="checkbox" value="@item.UserId" name="userDelId" class="chkCheckBoxId" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLogin)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserEmail)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", routeValues: new { id = item.UserId }, htmlAttributes: new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+
+        }
+
+    </table>
+}
+
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

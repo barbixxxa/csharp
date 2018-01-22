@@ -25,5 +25,7 @@ namespace WebSystem.Models
         [Display(Name = "E-mail")]
         public string UserEmail { get; set; }
 
+        public bool isChecked { get; set; }
+
     }
 }

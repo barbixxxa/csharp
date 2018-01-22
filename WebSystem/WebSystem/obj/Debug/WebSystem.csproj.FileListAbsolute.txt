@@ -90,3 +90,7 @@ C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\obj\
 C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\obj\Debug\WebSystem.pdb
 C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\bin\MySql.Data.dll
 C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\bin\MySql.Data.xml
+C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\bin\PagedList.dll
+C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\bin\PagedList.Mvc.dll
+C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\bin\PagedList.xml
+C:\Users\ealbuquerque\Documents\learning\learningCSharp\WebSystem\WebSystem\bin\PagedList.Mvc.xml

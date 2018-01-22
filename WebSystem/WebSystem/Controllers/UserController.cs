@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WebSystem.Models;
+using PagedList;
+using System;
 
 namespace WebSystem.Controllers
 {
@@ -16,11 +18,25 @@ namespace WebSystem.Controllers
 
         // GET: User
         [HttpGet]
-        public ViewResult Index(string sortOrder, string searchUser)
+        public ViewResult Index(string sortOrder, string currentFilter, string searchUser, int? page)
         {
-            ViewBag.LoginSortParm = string.IsNullOrEmpty(sortOrder) ? "login_asc" : "";
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-            ViewBag.MailSortParm = string.IsNullOrEmpty(sortOrder) ? "mail_asc" : "";
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.LoginSortParm = (string.IsNullOrEmpty(sortOrder) || sortOrder != "login_asc") ? "login_asc" : "login_desc";
+            ViewBag.NameSortParm = (string.IsNullOrEmpty(sortOrder) || sortOrder != "name_asc") ? "name_asc" : "name_desc";
+            ViewBag.MailSortParm = (string.IsNullOrEmpty(sortOrder) || sortOrder != "mail_asc") ? "mail_asc" : "mail_desc";
+            ViewBag.IdSortParm = (string.IsNullOrEmpty(sortOrder) || sortOrder != "id_desc") ? "id_desc" : "id_asc";
+
+            if (searchUser != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchUser = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchUser;
+
             ListadeUsuarios = dbc.Select();
             var users = from u in ListadeUsuarios select u;
 
@@ -42,12 +58,29 @@ namespace WebSystem.Controllers
                 case "mail_asc":
                     users = users.OrderBy(u => u.UserEmail);
                     break;
+                case "login_desc":
+                    users = users.OrderByDescending(u => u.UserLogin);
+                    break;
+                case "name_desc":
+                    users = users.OrderByDescending(u => u.UserName);
+                    break;
+                case "mail_desc":
+                    users = users.OrderByDescending(u => u.UserEmail);
+                    break;
+                case "id_desc":
+                    users = users.OrderByDescending(u => u.UserId);
+                    break;
                 default:
                     users = users.OrderBy(u => u.UserId);
                     break;
             }
 
-            return View(users.ToList());
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            return View(users.ToPagedList(pageNumber, pageSize));
+
+
         }
 
         //Create User
@@ -100,6 +133,20 @@ namespace WebSystem.Controllers
         public ActionResult Delete(User userDel)
         {
             dbc.Delete(userDel.UserId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSelected(FormCollection formColletion)
+        {
+
+            string[] ids = formColletion["userDelId"].Split(new char[] { ',' });
+            foreach (string id in ids)
+            {
+
+                dbc.Delete(int.Parse(id));
+            }
+
             return RedirectToAction("Index");
         }
 
